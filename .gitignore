@@ -1,0 +1,4 @@
+node_modules/
+charts/*
+.env
+logs/
