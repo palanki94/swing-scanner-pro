@@ -3,7 +3,11 @@ import {
   calculateVWAP,
   getRSI,
   detectBullFlag,
-  detectDoubleBottom
+  detectDoubleBottom,
+  detectCupWithHandle,
+  detectInverseHS,
+  detectAscendingTriangle,
+  detectBullPennant
 } from '../services/patternService.js';
 import { hasUpcomingCatalyst } from '../services/catalystService.js';
 import { generateChart } from '../services/chartService.js';
@@ -42,17 +46,27 @@ export const scanSymbol = async (symbol) => {
     if (rsi < RSI_MIN || rsi > RSI_MAX) return null;
 
     // 3. Catalyst Check
-    const hasCatalyst = await hasUpcomingCatalyst(symbol);
-    if (!hasCatalyst) return null;
+    // const hasCatalyst = await hasUpcomingCatalyst(symbol);
+    // if (!hasCatalyst) return null;
 
     // 4. Pattern Detection
     const patterns = [
       detectBullFlag(bars),
-      detectDoubleBottom(bars)
-      // Add more: inverse H&S, cup-with-handle, etc.
+      detectDoubleBottom(bars),
+      detectCupWithHandle(bars),
+      detectInverseHS(bars),
+      detectAscendingTriangle(bars),
+      detectBullPennant(bars)
     ].filter(Boolean);
 
     if (!patterns.length) return null;
+
+    // Pick BEST pattern (highest R:R)
+    const bestPattern = patterns.reduce((best, p) => {
+      const rr = (p.target - p.entry) / (p.entry - p.stop);
+      const bestRr = (best.target - best.entry) / (best.entry - best.stop);
+      return rr > bestRr ? p : best;
+    }, patterns[0]);
 
     const pattern = patterns[0];
     const risk = pattern.entry - pattern.stop;

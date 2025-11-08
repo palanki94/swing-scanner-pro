@@ -60,9 +60,9 @@ export const generateChart = (bars, pattern, symbol) => {
   drawLine(pattern.stop, '#ff0000', 'Stop');
   drawLine(pattern.target, '#0099ff', 'Target');
 
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 24px Arial';
-  ctx.fillText(`${symbol} - ${pattern.type}`, 20, 40);
+  ctx.fillStyle = '#FFD700';
+  ctx.font = 'bold 20px Arial';
+  ctx.fillText(`PATTERN: ${pattern.type}`, 20, 70);
 
   const filePath = path.join(CHART_DIR, `${symbol}_${Date.now()}.png`);
   fs.writeFileSync(filePath, canvas.toBuffer());
