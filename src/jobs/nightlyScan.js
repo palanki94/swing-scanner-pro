@@ -15,15 +15,16 @@ const main = async () => {
 
     let triggered = 0;
     for (const symbol of STOCKS) {
-        const result = await scanSymbol(symbol);
-        if (result) triggered++;
-        await new Promise(r => setTimeout(r, 12000));  // 12s delay
+      const result = await scanSymbol(symbol);
+      if (result) triggered++;
+      await new Promise(r => setTimeout(r, 2000));  // 2s delay for Yahoo rate limit
     }
 
     logger.info(`Scan complete. ${triggered} alerts sent.`);
   } catch (error) {
     logger.error('Nightly scan failed', { error: error.message });
   } finally {
+    await mongoose.disconnect();
     process.exit();
   }
 };

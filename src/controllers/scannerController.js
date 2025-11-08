@@ -1,4 +1,4 @@
-import { fetchBars } from '../services/alphaVantageService.js';
+import { fetchBars } from '../services/yahooFinanceService.js';
 import {
   calculateVWAP,
   getRSI,
