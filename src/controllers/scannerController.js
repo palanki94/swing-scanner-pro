@@ -1,4 +1,4 @@
-import { fetchBars } from '../services/polygonService.js';
+import { fetchBars } from '../services/alphaVantageService.js';
 import {
   calculateVWAP,
   getRSI,

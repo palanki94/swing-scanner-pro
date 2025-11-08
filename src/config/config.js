@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default {
-  polygon: { key: process.env.POLYGON_KEY },
+  alphaVantage: { key: process.env.AV_KEY },
   telegram: {
     token: process.env.TELEGRAM_TOKEN,
     chatId: process.env.TELEGRAM_CHAT_ID
